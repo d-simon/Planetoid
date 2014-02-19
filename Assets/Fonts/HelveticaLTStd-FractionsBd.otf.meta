@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8e0186fde89a84cd19f21d4d4679718a
+TrueTypeFontImporter:
+  serializedVersion: 2
+  fontSize: 16
+  fontColor: {r: 1, g: 1, b: 1, a: 1}
+  forceTextureCase: -2
+  characterSpacing: 1
+  characterPadding: 0
+  includeFontData: 1
+  use2xBehaviour: 0
+  fontNames:
+  - Helvetica
+  customCharacters: 
+  fontRenderingMode: 0
+  userData: 

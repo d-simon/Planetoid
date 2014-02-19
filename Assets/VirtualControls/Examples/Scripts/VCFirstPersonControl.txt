@@ -1,0 +1,204 @@
+// BXB Note:
+// This script is a functional conversion of Unity's Standard Assets (mobile) FirstPersonControl.js script.
+// Change the file extension from .txt to .js in order to have it compile. If you haven't yet taken the steps to setup VCS for use with
+// javascript, please follow the instructions here: http://bitbybitstudios.com/forum/discussion/1/virtual-controls-suite-faq#q1
+// otherwise you will compilation errors on lines 32 and 33.
+//
+// Areas of the script that have been modified from the original version are denoted with //BXB comments at the beginning, so you may
+// compare what changes were necessary to convert the script. Hopefully this simple example will be all you need to learn to convert
+// any other scripts for use with VCS controls.  Good luck!
+
+#pragma strict
+
+//////////////////////////////////////////////////////////////
+// VCFirstPersonControl.js
+//
+// FirstPersonControl creates a control scheme where the camera
+// location and controls directly map to being in the first person.
+// The left pad is used to move the character, and the
+// right pad is used to rotate the character. A quick double-tap
+// on the right joystick will make the character jump.
+//
+// If no right pad is assigned, then tilt is used for rotation
+// you double tap the left pad to jump
+//////////////////////////////////////////////////////////////
+
+@script RequireComponent( CharacterController )
+ 
+// This script must be attached to a GameObject that has a CharacterController
+//BXB var moveTouchPad : Joystick;
+//BXB var rotateTouchPad : Joystick;					// If unassigned, tilt is used
+ 
+var moveJoystick : VCAnalogJoystickBase;
+var rotateJoystick : VCAnalogJoystickBase;				// If unassigned, tilt is used
+ 
+var cameraPivot : Transform;							// The transform used for camera rotation
+ 
+var forwardSpeed : float = 4;
+var backwardSpeed : float = 1;
+var sidestepSpeed : float = 1;
+var jumpSpeed : float = 8;
+var inAirMultiplier : float = 0.25;						// Limiter for ground speed while jumping
+var rotationSpeed : Vector2 = Vector2( 50, 25 );		// Camera rotation speed for each axis
+var tiltPositiveYAxis = 0.6;
+var tiltNegativeYAxis = 0.4;
+var tiltXAxisMinimum = 0.1;
+ 
+private var thisTransform : Transform;
+private var character : CharacterController;
+private var cameraVelocity : Vector3;
+private var velocity : Vector3;							// Used for continuing momentum while in air
+private var canJump = true;
+ 
+function Start()
+{
+	// Cache component lookup at startup instead of doing this every frame         
+	thisTransform = GetComponent( Transform );
+	character = GetComponent( CharacterController );       
+	
+	// Move the character to the correct start position in the level, if one exists
+	var spawn = GameObject.Find( "PlayerSpawn" );
+	if (spawn)
+		thisTransform.position = spawn.transform.position;
+}
+ 
+function OnEndGame()
+{
+	// Disable joystick when the game ends 
+	//BXB moveTouchPad.Disable();
+	moveJoystick.enabled = false;
+	
+	//BXB if ( rotateTouchPad )
+		//BXB rotateTouchPad.Disable();
+	
+	if (rotateJoystick)
+		rotateJoystick.enabled = false;
+	
+	// Don't allow any more control changes when the game ends
+	this.enabled = false;
+}
+ 
+function Update()
+{
+	//BXB var movement = thisTransform.TransformDirection( Vector3( moveTouchPad.position.x, 0, moveTouchPad.position.y ) );
+	var movement = thisTransform.TransformDirection( Vector3( moveJoystick.AxisX, 0, moveJoystick.AxisY ) );
+	
+	// We only want horizontal movement
+	movement.y = 0;
+	movement.Normalize();
+	
+	// Apply movement from move joystick
+	//BXB var absJoyPos = Vector2( Mathf.Abs( moveTouchPad.position.x ), Mathf.Abs( moveTouchPad.position.y ) );   
+	var absJoyPos = Vector2( Mathf.Abs( moveJoystick.AxisX ), Mathf.Abs( moveJoystick.AxisY ) );
+	if ( absJoyPos.y > absJoyPos.x )
+	{
+		//BXB if ( moveTouchPad.position.y > 0 )
+		if ( moveJoystick.AxisY > 0 )
+			movement *= forwardSpeed * absJoyPos.y;
+		else
+			movement *= backwardSpeed * absJoyPos.y;
+	}
+	else
+	{
+		movement *= sidestepSpeed * absJoyPos.x;
+	}
+	
+	// Check for jump
+	if (character.isGrounded)
+	{              
+	    var jump = false;
+	    
+//BXB	var touchPad : Joystick;
+//BXB	if ( rotateTouchPad )
+//BXB		touchPad = rotateTouchPad;
+//BXB	else
+//BXB		touchPad = moveTouchPad;
+//BXB  
+//BXB	if ( !touchPad.IsFingerDown() )
+//BXB		canJump = true;
+//BXB          
+//BXB	if ( canJump && touchPad.tapCount >= 2 )
+	
+	    var touchPad : VCAnalogJoystickBase;
+	    if (rotateJoystick)
+			touchPad = rotateJoystick;
+	    else
+			touchPad = moveJoystick;
+	
+		if (touchPad.MagnitudeSqr <= 0.0f)
+			canJump = true;
+	   
+	    if (canJump && touchPad.TapCount >= 2)
+	    {
+			jump = true;
+			canJump = false;
+	    }      
+	   
+	    if (jump)
+	    {
+			// Apply the current movement to launch velocity               
+			velocity = character.velocity;
+			velocity.y = jumpSpeed;
+	    }
+	}
+	else
+	{                      
+		// Apply gravity to our velocity to diminish it over time
+		velocity.y += Physics.gravity.y * Time.deltaTime;
+		               
+		// Adjust additional movement while in-air
+		movement.x *= inAirMultiplier;
+		movement.z *= inAirMultiplier;
+	}
+               
+	movement += velocity;  
+	movement += Physics.gravity;
+	movement *= Time.deltaTime;
+	
+	// Actually move the character 
+	character.Move( movement );
+   
+   // Remove any persistent velocity after landing
+    if ( character.isGrounded )
+        velocity = Vector3.zero;
+   
+    // Apply rotation from rotation joystick
+    if ( character.isGrounded )
+    {
+	    var camRotation = Vector2.zero;
+	   
+	    //BXB if ( rotateTouchPad )
+	    	// BXB camRotation = rotateTouchPad.position;
+	    if ( rotateJoystick )
+	    {
+			camRotation.x = rotateJoystick.AxisX;
+			camRotation.y = rotateJoystick.AxisY;
+	    }
+	    else
+	    {
+			// Use tilt instead
+			var acceleration = Input.acceleration;
+			var absTiltX = Mathf.Abs( acceleration.x );
+			if ( acceleration.z < 0 && acceleration.x < 0 )
+			{
+				if ( absTiltX >= tiltPositiveYAxis )
+					camRotation.y = (absTiltX - tiltPositiveYAxis) / (1 - tiltPositiveYAxis);
+				else if ( absTiltX <= tiltNegativeYAxis )
+					camRotation.y = -( tiltNegativeYAxis - absTiltX) / tiltNegativeYAxis;
+			}
+			
+			if ( Mathf.Abs( acceleration.y ) >= tiltXAxisMinimum )
+				camRotation.x = -(acceleration.y - tiltXAxisMinimum) / (1 - tiltXAxisMinimum);
+	    }
+	   
+		camRotation.x *= rotationSpeed.x;
+		camRotation.y *= rotationSpeed.y;
+		camRotation *= Time.deltaTime;
+	   
+		// Rotate the character around world-y using x-axis of joystick
+		thisTransform.Rotate( 0, camRotation.x, 0, Space.World );
+		
+		// Rotate only the camera with y-axis input
+		cameraPivot.Rotate( -camRotation.y, 0, 0 );
+    }
+}
