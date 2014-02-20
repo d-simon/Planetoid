@@ -92,9 +92,13 @@ public class BossL1 : MonoBehaviour {
 	}
 
 	private void spawnDeathlings () {
-
-		SpawnPrefab.spawn ();
-
+		SpawnPrefab.spawn();
+		SpawnPrefab.spawn();
+		SpawnPrefab.spawn();
+		SpawnPrefab.spawn();
+		SpawnPrefab.spawn();
+		SpawnPrefab.spawn();
+		Debug.Log("Spawned Deathlings!");
 	}
 
 	

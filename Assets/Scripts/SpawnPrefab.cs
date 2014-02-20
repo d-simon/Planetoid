@@ -5,19 +5,12 @@ using System.Collections;
 public class SpawnPrefab : MonoBehaviour {
 
 	
-	private GameObject _SpawningPrefab;
+	public GameObject SpawningPrefab;
 	
 	public void spawn () {
-		if (_SpawningPrefab != null) {
-			Instantiate (_SpawningPrefab, this.transform.position, Quaternion.identity);
+		Debug.Log (SpawningPrefab);
+		if (SpawningPrefab != null) {
+			Instantiate (SpawningPrefab, this.transform.position, Quaternion.identity);
 		}
 	}
-
-
-	public GameObject SpawningPrefab {
-		set; get;
-	}
-
-
-
 }
