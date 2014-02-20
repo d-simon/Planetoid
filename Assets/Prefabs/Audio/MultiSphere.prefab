@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400018}
   - 114: {fileID: 11400020}
-  - 114: {fileID: 11400024}
   - 114: {fileID: 11400028}
   - 135: {fileID: 13500006}
   m_Layer: 0
@@ -92,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 50, z: 50}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -106,7 +105,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.3643303, y: 21.4226379, z: -49.4974861}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -117,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.3643265, y: 21.4226379, z: -49.4974861}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -128,7 +127,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.3643303, y: 21.4226379, z: -49.4974861}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -418,8 +417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed8642c5bcc442da89a34d2fdef791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dX: .0199999996
-  dY: .0199999996
+  dX: .00999999978
+  dY: .00999999978
   dZ: .0500000007
   RandomizeXY: 1
   clampRadius: 5
@@ -446,18 +445,6 @@ MonoBehaviour:
   invertValue: 1
   lerpFromMaterial: {fileID: 2100000, guid: a5b2974cb8b2399479d3f82a59ee4ab7, type: 2}
   lerpToMaterial: {fileID: 2100000, guid: 6a6832f2c281941c19b9a65c5204455b, type: 2}
---- !u!114 &11400024
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f24cf0b0996c78b4da3d183237dcbf22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killDelay: 14
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1

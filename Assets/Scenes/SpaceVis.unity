@@ -119,7 +119,7 @@ Prefab:
       objectReference: {fileID: 560839517}
     - target: {fileID: 100000, guid: e3e1db0551ed24aa79ffa6ae256c01bc, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: e3e1db0551ed24aa79ffa6ae256c01bc, type: 2}
       propertyPath: triggerReactivateDelay
@@ -1592,7 +1592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &559555283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5259,6 +5259,8 @@ GameObject:
   - 198: {fileID: 1878186075}
   - 199: {fileID: 1878186074}
   - 114: {fileID: 1878186076}
+  - 114: {fileID: 1878186077}
+  - 114: {fileID: 1878186078}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5281,7 +5283,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1878186062}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3d7cf643044ad249945982a7903abdb, type: 3}
   m_Name: 
@@ -6561,6 +6563,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ASmoveSpeed: 8
+--- !u!114 &1878186077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1878186062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d760dac42872543e59b0c722b067fdb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _CheckPoint: {fileID: 0}
+  StartAtCheckPoint: 1
+  _CoinCount: 0
+--- !u!114 &1878186078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1878186062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61227ec5461864632ae498aedc3cef88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectCoins: 1
 --- !u!1 &1879923759
 GameObject:
   m_ObjectHideFlags: 0
@@ -6575,7 +6603,6 @@ GameObject:
   - 114: {fileID: 1879923763}
   - 114: {fileID: 1879923762}
   - 114: {fileID: 1879923761}
-  - 114: {fileID: 1879923760}
   m_Layer: 8
   m_Name: GUISPhere
   m_TagString: TapDestroy
@@ -6583,18 +6610,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1879923760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1879923759}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f24cf0b0996c78b4da3d183237dcbf22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killDelay: 30
 --- !u!114 &1879923761
 MonoBehaviour:
   m_ObjectHideFlags: 0
