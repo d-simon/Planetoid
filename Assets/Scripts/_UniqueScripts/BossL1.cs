@@ -107,12 +107,11 @@ public class BossL1 : MonoBehaviour {
 	}
 
 	private void spawnDeathlings () {
-		SpawnPrefab.spawn();
-		SpawnPrefab.spawn();
-		SpawnPrefab.spawn();
-		SpawnPrefab.spawn();
-		SpawnPrefab.spawn();
-		SpawnPrefab.spawn();
+        float _radius = 12f;
+        for (int i = 0; i < 6; i++) {
+            float _alpha = i/6f*360f;
+            SpawnPrefab.spawn(new Vector3(Mathf.Sin(_alpha*Mathf.Deg2Rad)*12f, -6f ,Mathf.Cos(_alpha*Mathf.Deg2Rad)*12f));
+        }
 		Debug.Log("Spawned Deathlings!");
 	}
 
