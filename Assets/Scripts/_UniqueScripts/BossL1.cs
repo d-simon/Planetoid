@@ -5,13 +5,19 @@ using System.Collections;
 [RequireComponent (typeof (AiMotor))]
 [RequireComponent (typeof (SpawnPrefab))]
 public class BossL1 : MonoBehaviour {
+
 	
+	public float idlePhaseTime = 10f;
+	public float spawnPhaseTime = 8f;
+	public float spawnPhaseSpinSpeed = 20.0f;
+	[Range(0f,1f)]
+	public float spawnPhaseSpawnTimeTreshold = 0.75f;
+	public GameObject Deathling;
 	
 	[System.NonSerialized] bool _isEngaged = false; // is engaged
 	private AiMotor AiMotor;
 	private SpawnPrefab SpawnPrefab;
 	private GameObject Player;
-	public GameObject Deathling;
 
 	public void Start() {
 		
@@ -35,7 +41,9 @@ public class BossL1 : MonoBehaviour {
 	
 	// This runs as long as the Boss is engaged and calls Reset() afterwards
 	private IEnumerator IsEngaged () {
-		float _isCooling = 10.0f; // is cooling until next Attack
+		float _isCooling = idlePhaseTime; // is cooling until next Attack
+		float _spawnTimeTreshold = spawnPhaseSpawnTimeTreshold * -spawnPhaseTime;
+		bool _hasSpawnedDeathlings = false;
 
 		// The Loop
 		while(_isEngaged)
@@ -43,16 +51,23 @@ public class BossL1 : MonoBehaviour {
 			_isCooling -= Time.deltaTime;
 			
 			
-			// Attack Phase
+			// Spawn Phase
 			if(_isCooling < 0.0f) {
 
-				this.transform.Rotate (Vector3.Slerp(Vector3.zero, new Vector3(0.0f, 20.0f, 0.0f),_isCooling/-6.0f));
+				// Start spinning
+				float _slerpValue = (_isCooling > _spawnTimeTreshold) ? Mathf.Abs(_isCooling / _spawnTimeTreshold) : 1.0f - Mathf.Abs((_isCooling - _spawnTimeTreshold) / (-spawnPhaseTime - _spawnTimeTreshold)); // normalize from 0->-8 to 0->1->0
+				this.transform.Rotate (Vector3.Slerp(Vector3.zero, new Vector3(0.0f, spawnPhaseSpinSpeed, 0.0f), _slerpValue));
+
+				// Spawn Deathlings
+				if (_hasSpawnedDeathlings == false && _isCooling < _spawnTimeTreshold) {
+					spawnDeathlings();
+					_hasSpawnedDeathlings = true;
+				}
 
 				// Attack Phase End
-				if (_isCooling < -8.0f) {
-					_isCooling = 10.0f;
-					AiMotor.Jump();
-					spawnDeathlings();
+				if (_isCooling < -spawnPhaseTime) {
+					_isCooling = idlePhaseTime;
+					_hasSpawnedDeathlings = false;
 				}
 				
 				// Idle Phase
