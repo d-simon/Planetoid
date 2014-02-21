@@ -42,18 +42,18 @@ void Update()
     if( timeleft <= 0.0 )
     {
         // display two fractional digits (f2 format)
-	float fps = accum/frames;
-	string format = System.String.Format("{0:F2} FPS",fps);
-	guiText.text = format;
+    float fps = accum/frames;
+    string format = System.String.Format("{0:F2} FPS",fps);
+    guiText.text = format;
  
-	if(fps < 30)
-		guiText.material.color = Color.yellow;
-	else 
-		if(fps < 10)
-			guiText.material.color = Color.red;
-		else
-			guiText.material.color = Color.green;
-	//	DebugConsole.Log(format,level);
+    if(fps < 30)
+        guiText.material.color = Color.yellow;
+    else 
+        if(fps < 10)
+            guiText.material.color = Color.red;
+        else
+            guiText.material.color = Color.green;
+    //    DebugConsole.Log(format,level);
         timeleft = updateInterval;
         accum = 0.0F;
         frames = 0;

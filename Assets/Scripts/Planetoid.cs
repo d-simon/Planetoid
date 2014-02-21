@@ -9,17 +9,17 @@ using System.Collections;
 
 
 /// <summary>
-/// <para>Version 0.0.1</para>	 
+/// <para>Version 0.0.1</para>     
 /// <para>Author: David Simon (http://davidsimon.ch)</para>
 /// <para>Support: planetoid@davidsimon.ch </para>
 /// <para>Description: This will become the library for EVERYTHING! :-)</para>
 /// </summary>
 public class Planetoid : MonoBehaviour {
-	
-	
-	#region Variables
+    
+    
+    #region Variables
 
-	
-	#endregion
-	
+    
+    #endregion
+    
 }

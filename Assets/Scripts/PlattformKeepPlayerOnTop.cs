@@ -21,14 +21,14 @@ public class PlattformKeepPlayerOnTop : MonoBehaviour {
     // vertical offset of the player (how high the center of the
     // charcontroller must be above the center of the platform)
     public struct Data {
-    	public Data(Rigidbody ctrl, Transform t, float yOffset) {
-    		this.ctrl = ctrl;
-    		this.t = t;
-    		this.yOffset = yOffset;
-    	}
-    	public Rigidbody ctrl; // the char controller
-    	public Transform t; // transform of char
-    	public float yOffset; // y offset of char above platform center
+        public Data(Rigidbody ctrl, Transform t, float yOffset) {
+            this.ctrl = ctrl;
+            this.t = t;
+            this.yOffset = yOffset;
+        }
+        public Rigidbody ctrl; // the char controller
+        public Transform t; // transform of char
+        public float yOffset; // y offset of char above platform center
     };
 
     public float verticalOffset = 0.1f; // height above the center of object the char must be kept
@@ -38,79 +38,79 @@ public class PlattformKeepPlayerOnTop : MonoBehaviour {
 
     // used to calculate horizontal movement
     private Vector3 lastPos;
-	
-	private Vector3 relLastPos;
-	
+    
+    private Vector3 relLastPos;
+    
 
     void OnTriggerEnter(Collider other) {
-    	Rigidbody ctrl = other.GetComponent(typeof(Rigidbody)) as Rigidbody;
+        Rigidbody ctrl = other.GetComponent(typeof(Rigidbody)) as Rigidbody;
 
-    	// make sure we only move objects that are rigidbodies or charactercontrollers.
-    	// this to prevent we move elements of the level itself
-    	if (ctrl == null) return;
-		
-    	Transform t = other.transform; // transform of character
+        // make sure we only move objects that are rigidbodies or charactercontrollers.
+        // this to prevent we move elements of the level itself
+        if (ctrl == null) return;
+        
+        Transform t = other.transform; // transform of character
 
-    	// we calculate the yOffset from the character height and center
-    	float yOffset = /*ctrl.height / 2f - ctrl.center.y*/ verticalOffset;
+        // we calculate the yOffset from the character height and center
+        float yOffset = /*ctrl.height / 2f - ctrl.center.y*/ verticalOffset;
 
-    	Data data = new Data(ctrl, t, yOffset);
+        Data data = new Data(ctrl, t, yOffset);
 
-    	// add it to table of characters on this platform
-    	// we use the transform as key
-    	onPlatform.Add(other.transform, data);
+        // add it to table of characters on this platform
+        // we use the transform as key
+        onPlatform.Add(other.transform, data);
     }
-	
-/*	void OnTriggerStay(Collider other) {
+    
+/*    void OnTriggerStay(Collider other) {
 
-		
-		mPoint(other.transform.position);
-		
-		
-		
-		 // let's loop over all characters in the table
-    	foreach (DictionaryEntry d in onPlatform) {
-			
-    		Data data = (Data) d.Value; // get the data
-    		float charYVelocity = data.ctrl.velocity.y;
-			
-			relLastPos = relCurPos;
+        
+        mPoint(other.transform.position);
+        
+        
+        
+         // let's loop over all characters in the table
+        foreach (DictionaryEntry d in onPlatform) {
+            
+            Data data = (Data) d.Value; // get the data
+            float charYVelocity = data.ctrl.velocity.y;
+            
+            relLastPos = relCurPos;
          relCurPos = this.transform.InverseTransfor
-    		Vector3 relDelta = relCurPos - relLastPos;// check if char seems to be jumping
-    		//if ((charYVelocity <= 0f) || (charYVelocity <= yVelocity)) {
-    			Vector3 pos = data.t.position; // current charactercontroller position
-    			//pos.y = y + data.yOffset; // adjust to new platform height
-    			pos += delta; // adjust to horizontal movement
-				
-				Debug.Log ("delta = " + delta + relDelta);
-    			data.t.position = pos; // and write it back!
-    		//}
-    	}
-		
-	}*/
+            Vector3 relDelta = relCurPos - relLastPos;// check if char seems to be jumping
+            //if ((charYVelocity <= 0f) || (charYVelocity <= yVelocity)) {
+                Vector3 pos = data.t.position; // current charactercontroller position
+                //pos.y = y + data.yOffset; // adjust to new platform height
+                pos += delta; // adjust to horizontal movement
+                
+                Debug.Log ("delta = " + delta + relDelta);
+                data.t.position = pos; // and write it back!
+            //}
+        }
+        
+    }*/
 
     void OnTriggerExit(Collider other) {
-    	// remove (if in table) the uncollided transform
-    	onPlatform.Remove(other.transform);
-		
+        // remove (if in table) the uncollided transform
+        onPlatform.Remove(other.transform);
+        
     }
 
     void Start() {
-    	lastPos = transform.position;
-		
+        lastPos = transform.position;
+        
     }
 
     void FixedUpdate () {
-    	Vector3 curPos = transform.position;
-    	Vector3 delta = curPos - lastPos;
-    	lastPos = curPos;
+        Vector3 curPos = transform.position;
+        Vector3 delta = curPos - lastPos;
+        lastPos = curPos;
 
-    	foreach (DictionaryEntry d in onPlatform) {
-			
-    			Data data = (Data) d.Value;
-				Vector3 pos = data.t.position; 
-    			pos += delta;
-    			data.t.position = pos;
-    	}
+        foreach (DictionaryEntry d in onPlatform) {
+            
+                Data data = (Data) d.Value;
+                Vector3 pos = data.t.position; 
+                pos += delta;
+                data.t.position = pos;
+        }
     }
 }

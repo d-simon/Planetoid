@@ -38,7 +38,7 @@ void Start()
  
 void Update()
 {
-	
+    
     timeleft -= Time.deltaTime;
     accum += Time.timeScale/Time.deltaTime;
     ++frames;
@@ -46,19 +46,19 @@ void Update()
     // Interval ended - update GUI text and start new interval
     if( timeleft <= 0.0 )
     {
-	if (_enabled == true)
-	{
-	      
-		int theTime = (int) (Time.timeSinceLevelLoad / Time.timeScale * 100);
-		
-		theMinutes = (int) theTime / 60 / 100;
-		theSeconds = (int) theTime / 100 % 60;	
-		theHundredths = theTime % 100;
-	}
-	string format = System.String.Format("{0:D}'' {1:D}' {2:D}", theMinutes, theSeconds, theHundredths);
-	guiText.text = format; 
+    if (_enabled == true)
+    {
+          
+        int theTime = (int) (Time.timeSinceLevelLoad / Time.timeScale * 100);
+        
+        theMinutes = (int) theTime / 60 / 100;
+        theSeconds = (int) theTime / 100 % 60;    
+        theHundredths = theTime % 100;
+    }
+    string format = System.String.Format("{0:D}'' {1:D}' {2:D}", theMinutes, theSeconds, theHundredths);
+    guiText.text = format; 
  
-	//	DebugConsole.Log(format,level);
+    //    DebugConsole.Log(format,level);
         timeleft = updateInterval;
         accum = 0.0F;
         frames = 0;

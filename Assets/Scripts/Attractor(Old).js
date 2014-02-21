@@ -54,7 +54,7 @@ function Update(){
         isGrounded = false;
         // assume usual ground normal to avoid "falling forever"
        // surfaceNormal = Vector3.up; 
-    	surfaceNormal = this.transform.position - this.transform.parent.transform.position;
+        surfaceNormal = this.transform.position - this.transform.parent.transform.position;
     }
     myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed*Time.deltaTime);
     // find forward direction with new myNormal:
