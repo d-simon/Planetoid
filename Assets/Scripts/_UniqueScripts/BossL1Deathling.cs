@@ -8,7 +8,7 @@ public class BossL1Deathling : MonoBehaviour {
 
     
     [System.NonSerialized] bool _isEngaged = false; // is engaged
-    private AiMotor AiMotor;
+    public AiMotor AiMotor;
 
     public void Start() {
         

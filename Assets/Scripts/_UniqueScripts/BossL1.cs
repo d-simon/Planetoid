@@ -111,7 +111,8 @@ public class BossL1 : MonoBehaviour {
         for (int i = 0; i < 6; i++) {
             float _alpha = i/6f*360f;
             GameObject deathling = SpawnPrefab.spawn(new Vector3(Mathf.Sin(_alpha * Mathf.Deg2Rad) * 12f, -6f ,Mathf.Cos(_alpha*Mathf.Deg2Rad) * 12f));
-            deathling.transform.parent = this.transform;
+            deathling.GetComponent<AiMotor>().currentMovement = transform.position - deathling.transform.position;
+            deathling.transform.parent = this.transform.parent;
         }
         Debug.Log("Spawned Deathlings!");
     }
