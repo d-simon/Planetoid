@@ -13,11 +13,14 @@ public class WireFrameEffect : MonoBehaviour
 {
     Mesh LastMesh;
     Material LastMaterial;
- 
-    string lineshader = "Shader \"Unlit/Color\" { Properties { _Color(\"Color\", Color) = (1, 1, 1, 1)   } SubShader {  Lighting Off Color[_Color] Pass {} } }";
-   
+	public Color shaderColor;
+	string lineshader;
+
     public void OnEnable()
     {
+		var colorStr = System.String.Format("({0},{1},{2},{3})", shaderColor.r, shaderColor.g, shaderColor.b, shaderColor.a);
+		lineshader = "Shader \"Unlit/Color\" { Properties { _Color(\"Color\", Color) = " + colorStr +  "   } SubShader {  Lighting Off Color[_Color] Pass {} } }";
+
         var mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
         var renderer = gameObject.GetComponent<MeshRenderer>();
         LastMaterial = renderer.material;
